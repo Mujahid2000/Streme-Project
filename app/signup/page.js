@@ -56,7 +56,7 @@ export default function SignupPage() {
             if (userInfo && userInfo.isAdmin) {
                 await router.push('/dashboard');
             } else {
-                await router.push('/videos');
+                await router.push('/home');
             }
             toast.success("Signup successfully");
         } catch (error) {

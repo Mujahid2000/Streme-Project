@@ -36,7 +36,7 @@ const Suggest = () => {
       >
         {suggest.map((item) => (
           <SwiperSlide key={item._id}>
-            <Link href={`/videos/${item._id}`}>
+            <Link href={`/movies/${item._id}`}>
               
                 <img className='h-80' src={item.thumbnail.link} alt={item.title} />
                 <p className='text-white'>{item.title}</p>

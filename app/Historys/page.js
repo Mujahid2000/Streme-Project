@@ -38,7 +38,7 @@ const History = () => {
                     <div className="grid place-content-center grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-4 gap-y-8">
                         {historyVideo?.map(item => (
                             <div key={item?._id}>
-                                <Link href={`/videos/${item?._id}`}>
+                                <Link href={`/movies/${item?._id}`}>
                                     <div className="max-w-xs relative text-white h-72 rounded-md shadow-md overflow-hidden">
                                         <img
                                             className="h-[265px] object-cover rounded-sm"

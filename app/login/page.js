@@ -22,10 +22,10 @@ export default function LoginPage() {
             if (userInfo && userInfo.isAdmin) {
                 await router.push('/dashboard');
             } else if (userInfo && userInfo.isPayment){
-                await router.push('/videos');
+                await router.push('/home');
             }
             else {
-                await router.push('/videos');
+                await router.push('/home');
             }
         } catch (error) {
             setError(error.message);
