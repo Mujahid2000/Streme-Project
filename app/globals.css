@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/tailwind.css */
+
+/* Your existing Tailwind imports and custom styles */
+
+/* Center the play icon */
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  background-color: rgb(2 6 23);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    background-color: rgb(2 6 23);
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Production level is delete. its do not need */
+.testColor {
+  color: #ededef;
+}
+
+.rating {
+  display: none;
+}
+.hove {
+  cursor: pointer;
+}
+.hove:hover + .rating {
+  display: block;
+  cursor: pointer;
+}
+.rating:hover {
+  display: block;
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+:root {
+ 
+    --text: white;
+    --textSoft: #b7bac1;
+  }
+  
+
+  
+  body {
+  
+    color: var(--text);
+  }
+  
+ 

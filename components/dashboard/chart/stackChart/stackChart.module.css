@@ -1,0 +1,8 @@
+/* Add these styles to your Tailwind CSS file or style tag in the component */
+@media (max-width: 768px) {
+    /* Adjust the width for smaller screens */
+    .responsive-chart {
+      width: 100%;
+    }
+  }
+  
