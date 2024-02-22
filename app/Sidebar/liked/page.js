@@ -9,7 +9,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { FaAngleDown } from 'react-icons/fa';
 
-const page = () => {
+const Page = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [like, setLike] = useState();
     const userInfo = useUserInfo();
@@ -130,4 +130,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;
