@@ -7,6 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 import Sidebar from '@/app/Sidebar/Sidebar';
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { useRouter } from 'next/navigation';
+import NotificationMenu from '../Notification/Notification';
 
 
 // Assuming the Sidebar component exists
@@ -65,9 +66,7 @@ const MainNavbar = ({ isOpen, handleSidebarToggle }) => {
                 <Link href="/movies">
                   <span className="text-white text-xs md:text-base lg:text-lg xl:text-lg 2xl:text-lg mr-3 cursor-pointer">Movies</span>
                 </Link>
-                <Link href="/animation">
-                  <span className="text-white text-xs md:text-base lg:text-lg xl:text-lg 2xl:text-lg mr-3 cursor-pointer">Animation</span>
-                </Link>
+
                 <Link href="/drama">
                   <span className="text-white text-xs md:text-base lg:text-lg xl:text-lg 2xl:text-lg mr-3 cursor-pointer">Drama</span>
                 </Link>
@@ -76,21 +75,23 @@ const MainNavbar = ({ isOpen, handleSidebarToggle }) => {
                 </Link>
               </div>
               <div className="flex items-center  relative">
-              
+
                 <input
                   type="text"
                   placeholder="Search movies..."
                   className="bg-gray-700 text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 mr-2
-             w-full" 
+             w-full"
                   onChange={handleSearch}
-                  onKeyDown={handleEnterPress} 
+                  onKeyDown={handleEnterPress}
                 />
 
-
+              
+                  <NotificationMenu />
+              
                 {userInfo ? (
                   <div>
                     <button onClick={toggleDropdown} className="flex items-center text-white focus:outline-none">
-                      <img src={userInfo?.photoURL} alt="User Avatar" className="w-7 h-7 rounded-full" />
+                      <img src={userInfo?.photoURL} alt="User Avatar" className="w-10 h-10 rounded-full" />
                       <span className="ml-2">{userInfo?.displayName}</span>
                     </button>
                     {isDropdownOpen && (

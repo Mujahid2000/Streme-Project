@@ -28,11 +28,8 @@ const VideoDetail = ({ params }) => {
   const [likeData, setLikeData] = useState(null);
   const userInfo = useUserInfo();
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const email = userInfo?.email
-  // console.log(likeData);
-  // console.log("chek", videoData)
+  const email = userInfo?.email;
 
-  const [rating, setRating] = useState(0);
   const [ratingDatas, setRatingData] = useState([])
   const [data, setData] = useState(0)
   const [usersRating, setUserRating] = useState(0)
@@ -41,22 +38,17 @@ const VideoDetail = ({ params }) => {
   const [playList, setPlayList] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(likeData);
-  console.log("chek", videoData)
-
+  // console.log(likeData);
+  // console.log("chek", videoData)
   const AllUserRating = ratingDatas.filter(user => user.Id == id);
   console.log(AllUserRating)
 
   const totaluserRating = AllUserRating.reduce((total, totalRating) => total + totalRating.ratings
     , 0);
 
-
-  const handleStarClick = (selectedRating) => {
-    setRating(selectedRating);
-  };
-  const ratingData = async () => {
-    await axios.post("https://endgame-team-server.vercel.app/addratings", {
-      ratings: rating,
+  const handleStarClick = async(selectedRating) => {
+    await axios.post("https://endgame-team-server.vercel.app/rating", {
+      ratings: selectedRating,
       Id: id
     })
       .then(res => {
@@ -66,16 +58,15 @@ const VideoDetail = ({ params }) => {
         }
       })
       .catch(error => console.error(error))
-    setUserRating(rating)
-  }
+    setUserRating(selectedRating)
+  };
+ 
   useEffect(() => {
     fetch('https://endgame-team-server.vercel.app/ratings')
       .then(res => res.json())
       .then(dataes => setRatingData(dataes))
 
   }, [])
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +75,7 @@ const VideoDetail = ({ params }) => {
 
           const response = await axios.get(`https://endgame-team-server.vercel.app/like/${id}/${email}`);
           const responseData = response.data;
-          console.log(responseData);
+          // console.log(responseData);
           setLikeData(responseData);
         }
 
@@ -174,7 +165,7 @@ const VideoDetail = ({ params }) => {
       <MainNavbar isOpen={isOpen} handleSidebarToggle={handleSidebarToggle} />
 
       <div className="max-w-screen-xl bg-slate-950 px-1 mx-auto flex-row lg:flex gap-4">
-        <div className="md:col-span-1 lg:col-span-2 mt-16 md:mt-16 lg:mt-20 xl:mt-24 2xl:mt-32">
+        <div className="md:col-span-1 lg:col-span-2 mt-0 pt-16 md:mt-16 lg:mt-20 xl:mt-24 2xl:mt-32">
           <VideoPlayer video={videoData.video.link} />
         </div>
         <div className="md:col-span-1 lg:col-span-1 px-1  h-[580px] mt-16 md:mt-16 lg:mt-20 xl:mt-24 2xl:mt-32">
@@ -190,10 +181,8 @@ const VideoDetail = ({ params }) => {
           <PlaylistButton playlist={playlist} setStatePlaylike={setStatePlaylike} data={videoData} playList={playList}></PlaylistButton>
           <Share video={videoData.video.link} />
         </div>
-
-        <div className='flex items-center px-1 gap-2'>
+        <div className='flex ml-4 items-center gap-2'>
           <FaRegStar className='text-green-600' />
-
           <p className='flex my-2 gap-4'>
             <span className='text-white flex'> <p>{
               parseFloat((((totaluserRating + usersRating)) / 100 * 5).toFixed(3))}</p></span>
@@ -206,18 +195,15 @@ const VideoDetail = ({ params }) => {
                     onClick={() => handleStarClick(star)}
                     style={{
                       cursor: 'pointer',
-                      color: star <= rating ? 'gold' : 'gray',
+                      color: star <= usersRating ? 'gold' : 'gray',
                     }}
                   >
                     &#9733;
-
                   </span>
                 ))}
                 <br></br>
-                <button onClick={ratingData} className='bg-slate-500 rounded py-0 px-2'>Rating</button>
-
-              </div>
-              {/* <p className='text-stone-200'>Selected Rating: {rating}</p> */}
+                 </div>
+              
             </div>
           </p>
         </div>

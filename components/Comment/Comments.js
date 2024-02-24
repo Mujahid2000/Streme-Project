@@ -1,5 +1,4 @@
 "use client";
-// import {updateComment as updateCommentApi } from "./api"
 import { Avatar, Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import CommentForm from './CommentForm';
@@ -7,6 +6,7 @@ import Comment from './Comment';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import useUserInfo from '@/hooks/useUser';
+
 const Comments = ({videoId}) => {
     const [backendComments, setBackendComment] = useState([]);
     const [activeComment, setActiveComment] = useState(null)
@@ -116,6 +116,7 @@ const Comments = ({videoId}) => {
                 console.log('like', error)
             })
     }
+    
     // disLike
     const handleDislike = ({ parentId, _id }) => {
         const userDislike = user.email
@@ -142,12 +143,17 @@ const Comments = ({videoId}) => {
             .catch(error => {
                 console.log(error)
             })
-    }, [data])
+    }, [data, videoId])
 
 
     return (
         <Box maxWidth={'1280px'} margin={'auto'} >
+           
+
             <Box marginX={2} sx={{ color: "white", }}>
+            <Box display={'flex'} justifyContent={'end'}>
+          
+            </Box>
                 <Typography marginBottom={3} sx={{ fontSize: { xs: 17, sm: 20 }, fontWeight: 700, color: "white" }}>({backendComments.length})Comments</Typography>
                 <Box display={'flex'} justifyContent={'space-between'} marginRight={4} sx={{ color: "white" }}>
                     <Avatar alt="Remy Sharp" src={user.photoURL} />

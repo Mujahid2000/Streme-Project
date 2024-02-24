@@ -6,25 +6,25 @@ import { storage } from '@/utils/firebase-config';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const EpisodeModal = ({ closeModal }) => {
-  const [videoUploadPercent, setVideoUploadPercent] = useState(0)
+  const [videoUploadPercent, setVideoUploadPercent] = useState(0);
   const [formData, setFormData] = useState({
     episodes: 0,
     description: '',
-    title: '', // Changed to empty string
+    title: '', // Initialize to empty string
     thumbnail: { file: null, link: null },
     poster: { file: null, link: null },
     video: { file: null, link: null },
     status: 'enable',
+    views:0,
+  
   });
 
-  const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Renamed isClient to isLoading
   const [showNames, setShowNames] = useState([]);
   const [selectedShowId, setSelectedShowId] = useState(null);
   const [insertedEpisodeId, setInsertedEpisodeId] = useState(null);
 
   useEffect(() => {
-    setIsClient(true);
-
     const fetchShowNames = async () => {
       try {
         const response = await axios.get('https://endgame-team-server.vercel.app/latestShows');
@@ -32,6 +32,8 @@ const EpisodeModal = ({ closeModal }) => {
       } catch (error) {
         console.error('Failed to fetch show names:', error.message);
         toast.error('Failed to fetch show names. Please try again.');
+      } finally {
+        setIsLoading(false); // Update isLoading once data is fetched
       }
     };
 
@@ -48,7 +50,7 @@ const EpisodeModal = ({ closeModal }) => {
   };
 
   const handleFileUpload = async (e) => {
-    if (!isClient) return;
+    if (isLoading) return;
 
     const { name, files } = e.target;
 
@@ -72,7 +74,7 @@ const EpisodeModal = ({ closeModal }) => {
 
       uploadTask.on('state_changed', (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setVideoUploadPercent(progress)
+        setVideoUploadPercent(progress);
         console.log(`Upload is ${progress}% done`);
       });
 
@@ -127,7 +129,7 @@ const EpisodeModal = ({ closeModal }) => {
       setInsertedEpisodeId(insertedId); // Update insertedEpisodeId state
 
       // Wait for insertedEpisodeId state to update
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       toast.success(`Episode saved successfully! Acknowledged: ${acknowledged}`, {
         autoClose: 5000,
@@ -174,11 +176,14 @@ const EpisodeModal = ({ closeModal }) => {
           value={formData.title}
           onChange={(e) => {
             const { value } = e.target;
-            setFormData((prevData) => ({
-              ...prevData,
-              title: showNames.find((show) => show._id === value).title, // Set title based on _id
-            }));
-            setSelectedShowId(value);
+            setSelectedShowId(value); // Update selected show ID first
+            const selectedShow = showNames.find((show) => show._id === value);
+            if (selectedShow) {
+              setFormData((prevData) => ({
+                ...prevData,
+                title: selectedShow.title, // Set title based on _id
+              }));
+            }
           }}
           className="mt-1 p-2 border bg-slate-800 rounded w-full"
         >
@@ -190,12 +195,11 @@ const EpisodeModal = ({ closeModal }) => {
           ))}
         </select>
       </div>
-      <span className=' flex justify-center items-center text-center'>
-                                {videoUploadPercent &&
-                                    <h2 className=' bg-green-500 p-2 text-lg  rounded-md'>
-                                        Upload is {videoUploadPercent}% done
-                                    </h2>}
-                            </span>
+      <span className="flex justify-center items-center text-center">
+        {videoUploadPercent && (
+          <h2 className="bg-green-500 p-2 text-lg rounded-md">Upload is {videoUploadPercent}% done</h2>
+        )}
+      </span>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Thumbnail:</label>
         <input

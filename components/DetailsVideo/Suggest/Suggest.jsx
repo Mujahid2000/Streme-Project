@@ -10,7 +10,7 @@ const Suggest = () => {
   const [suggest, setSuggest] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/suggest')
+    axios.get('https://endgame-team-server.vercel.app/suggest')
       .then(res => res.data)
       .then(data => {
         // Shuffle the array randomly

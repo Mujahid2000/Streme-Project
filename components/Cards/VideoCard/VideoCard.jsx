@@ -39,12 +39,12 @@ const VideoCard = () => {
         <>
            
 
-            <div className=' flex justify-between py-4 mt-10 items-center'>
+            <div className=' flex justify-between py-4 items-center'>
                 <h2 className='text-white  text-lg font-semibold'>Latest Movies</h2>
 
             </div>
 
-            <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 place-items-center  gap-4 gap-y-8">
+            <div className="grid place-content-center grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-4 gap-y-8">
                 {moviesData.map(item => (
                     <div key={item._id}>
                         <Link href={`/movies/${item._id}`}>

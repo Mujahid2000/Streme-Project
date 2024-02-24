@@ -14,7 +14,7 @@ const Share = ({ video }) => {
 
   return (
     <div>
-      <button onClick={handleShare} className="flex items-center space-x-1">
+      <button onClick={handleShare} className="flex text-white items-center space-x-1">
         <FaShare />
         <span>Share</span>
       </button>

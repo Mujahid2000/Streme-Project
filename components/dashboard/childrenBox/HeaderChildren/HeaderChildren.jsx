@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import MovieModal from '../../table/modal/movieModal/movieModal';
 import ShowModal from '../../table/modal/showModal/showModal';
-// import EpisodeModal from '../../table/modal/episodeModal/EpisodeModal';
+
 import UploadModal from '../../table/modal/UserRelated/uploadModal/uploadModal';
-import EpisodeModal from '../../table/modal/episodeModal/episodeModal';
+import EpisodeModal from '@/components/dashboard/table/modal/episodeModal/episodeModal';
 const HeaderChildren = ({ dbutton }) => {
 
   const [isModalOpen, setModalOpen] = useState(false);

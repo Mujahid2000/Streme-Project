@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { RiShining2Fill } from "react-icons/ri";
-import { FaUserAlt } from "react-icons/fa";
+
 import { IoMdClose } from "react-icons/io";
 import { IoChatbubbleOutline, IoSend } from "react-icons/io5";
 import useUserInfo from '@/hooks/useUser';
@@ -19,7 +18,7 @@ const ChatModal = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('http://localhost:5000/chatbot');
+        const res = await fetch('https://endgame-team-server.vercel.app/chatbot');
         if (!res.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -107,7 +106,7 @@ const ChatModal = () => {
   return (
     <>
       <button
-        className="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16  bg-black hover:bg-gray-700 mr-16 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
+        className="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-full w-16 h-16 bg-gray-700  hover:bg-green-600 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
         type="button"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
@@ -157,7 +156,7 @@ const ChatModal = () => {
             </div>
 
             <div className="bg-white p-4 flex items-center">
-              <input type="text" placeholder="Type your message..." className="flex-1 bg-black border rounded-full px-4 py-2 focus:outline-none" value={userMessage} onChange={handleChange} />
+              <input type="text" placeholder="Type your message..." className="flex-1 bg-black border text-white rounded-full px-4 py-2 focus:outline-none" value={userMessage} onChange={handleChange} />
               <button  type="submit" className="bg-blue-500 text-white rounded-full p-2 ml-2 hover:bg-blue-600 focus:outline-none" onClick={handleSubmit}>
                 <IoSend />
               </button>

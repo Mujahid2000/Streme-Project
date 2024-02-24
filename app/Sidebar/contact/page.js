@@ -7,6 +7,7 @@ import ProtectedRoute from '@/utils/ProtectedRoute';
 import MainNavbar from '@/components/MainNavbar/MainNavbar';
 import Sidebar from '../Sidebar';
 import axios from 'axios';
+import { IoSend } from 'react-icons/io5';
 
 const db = getFirestore(app);
 
@@ -16,7 +17,7 @@ const ChatPage = () => {
   const userInfo = useUserInfo();
   const [isOpen, setIsOpen] = useState(false);
   const [dbessage, setStoreMessage] = useState('');
-  console.log(userInfo?.userName);
+  // console.log(userInfo?.userName);
 
   useEffect(() => {
     const q = query(collection(db, "message"), orderBy("timestamp"));
@@ -49,7 +50,7 @@ const ChatPage = () => {
         timestamp: serverTimestamp()
       });
       setNewMessage(""); // Clear the input field after sending the message
-      await axios.post('http://localhost:5000/messageData', {
+      await axios.post('https://endgame-team-server.vercel.app/messageData', {
         message: newMessage,
         user: userInfo?.userName,
         
@@ -74,11 +75,22 @@ const ChatPage = () => {
     <ProtectedRoute>
      <Sidebar isOpen={isOpen} handleSidebarToggle={handleSidebarToggle}/>
     <MainNavbar isOpen={isOpen} handleSidebarToggle={handleSidebarToggle}></MainNavbar>
-    <div className="flex mt-20 h-screen overflow-hidden">
-      <div className="flex-1 flex flex-col">
-        <header className="bg-slate-800 p-4 text-gray-700">
-          <h1 className="text-2xl font-semibold text-white text-center">Global ChatBox</h1>
-        </header>
+   
+<div className="bg-gray-900 h-screen flex flex-col max-w-lg mx-auto mt-12 md:mt-20 lg:mt-20 xl:mt-20 2xl:mt-20">
+    <div className="bg-blue-500 p-4 text-white flex justify-between items-center">
+      <button id="login" className="hover:bg-blue-400 rounded-md ">
+        <img className='w-10 h-10 rounded-full' src={userInfo?.photoURL} title={userInfo?.displayName}></img>
+      </button>
+      <span className='py-2'>Global ChatBox</span>
+      <div className="relative inline-block text-left">
+      
+      </div>
+    </div>
+
+    <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex flex-col space-y-2">
+            
+           
         <div className="flex-1 overflow-y-auto p-4 pb-20">
         {messages.map(msg => (
               <div key={msg.id} className={`message flex ${msg.data.uid === userInfo?.uid ? 'justify-end' : 'justify-start'}`}>
@@ -89,18 +101,20 @@ const ChatPage = () => {
               </div>
             ))}
         </div>
-        <div className="bg-gray-600 p-4 flex">
-          <input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-1 text-white h-10 rounded px-3 text-sm bg-gray-800"
-            type="text"
-            placeholder="Type your message…"
-          />
-          <button type='submit' onClick={sendMessage} className='ml-4 px-4 py-2 text-white rounded-lg bg-blue-500'>Send</button>
+        
         </div>
-      </div>
     </div>
+    
+    <div className="bg-gray-800 p-4 flex items-center">
+        <input value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)} type="text" placeholder="Type your message..." className="flex-1 border rounded-full px-4 py-2 focus:outline-none"/>
+        <button type='submit' onClick={sendMessage} className="bg-blue-500 text-white rounded-full p-2 ml-2 hover:bg-blue-600 focus:outline-none">
+         <IoSend></IoSend>
+        </button>
+    </div>
+    
+  </div>
+  
   </ProtectedRoute>
   
   

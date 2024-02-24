@@ -22,7 +22,7 @@ const Videos = () => {
                         <Sidebar isOpen={isOpen} handleSidebarToggle={handleSidebarToggle} />
                         <div className="flex flex-col flex-grow">
                             <MainNavbar isOpen={isOpen} handleSidebarToggle={handleSidebarToggle} />
-                            <div>
+                            <div className="py-20 px-16">
                                 <VideoCard />
                                
                             </div>

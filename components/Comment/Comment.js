@@ -1,12 +1,11 @@
-import { Avatar, Box, Divider, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import QuickreplyIcon from '@mui/icons-material/Quickreply';
 import EditIcon from '@mui/icons-material/Edit';
 import CommentForm from "./CommentForm";
-import { Height } from "@mui/icons-material";
-const Comment = ({ comment, replies, currentUserId, deleteComment, updateComment, activeComment, setActiveComment, parentId = null, addComment, handleLike,handleDislike }) => {
-    // console.log(comment.like?.length)
+const Comment = ({ comment, replies, currentUserId, deleteComment, updateComment, activeComment, setActiveComment, parentId = null, addComment, handleLike, handleDislike }) => {
+    console.log(comment)
     const currentUserLikeMap = comment.like?.find(data => data === currentUserId)
     const currentUserLike = currentUserLikeMap?.length > 0 && currentUserLikeMap?.length;
     // const fiveMinute = 300000;
@@ -14,10 +13,32 @@ const Comment = ({ comment, replies, currentUserId, deleteComment, updateComment
     const canReply = Boolean(currentUserId);
     const canEdit = currentUserId === comment?.userId;
     const canDelete = currentUserId === comment?.userId;
-    const createdAt = new Date(comment?.createdAt).toLocaleDateString();
+    // const createdAt = new Date(comment?.createdAt).toLocaleDateString();
     const isReplying = activeComment && activeComment.type === "replying" && activeComment.id === comment?._id
     const isEditing = activeComment && activeComment.type === "editing" && activeComment.id === comment?._id
     const replyId = parentId ? parentId : comment?._id;
+
+
+    //Time
+    const timeAgo = (date) => {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        if (days > 7) {
+            return date.toLocaleDateString(); // return the full date if it's more than 7 days ago
+        } else if (days > 0) {
+            return `${days} day${days > 1 ? 's' : ''} ago`;
+        } else if (hours > 0) {
+            return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+        } else if (minutes > 0) {
+            return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+        } else {
+            return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+        }
+    }
+    const date = new Date(comment?.createdAt);
+    const createdAt = timeAgo(date);
     return (
         <Box>
             <Box key={comment._id} sx={{ display: 'flex', marginTop: '8px', marginBottom: 2, color: "white" }}>
@@ -53,7 +74,7 @@ const Comment = ({ comment, replies, currentUserId, deleteComment, updateComment
                     {/* Reply Comment Sections...................................... */}
                     {isReplying && (
                         <Box marginRight={5} marginTop={2}>
-                            <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, replyId)} />
+                            <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, replyId, userId)} />
                         </Box>
                     )}
                     {replies.length > 0 && (

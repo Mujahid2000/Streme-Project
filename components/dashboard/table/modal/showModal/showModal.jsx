@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { storage } from '@/utils/firebase-config';
 import axios from 'axios';
@@ -10,22 +10,21 @@ const ShowModal = ({ closeModal }) => {
   const [showData, setShowData] = useState({
     title: '',
     description: '',
-    showAccess: 'standard',
-    language: 'English',
-    genres: 'Action',
+    showAccess: '',
+    language: '',
+    genres: '',
     thumbnail: { file: null, link: null },
-    poster: { file: null, link: null },
+    banner: { file: null, link: null },
     publisDate: '',
     episodes: [],
     category: '',
     country: '',
+    status:'enable',
     views: 0,
+    IsComplete:false,
 
   });
 
-  useEffect(() => {
-    // Add any initial setup logic here
-  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +49,7 @@ const ShowModal = ({ closeModal }) => {
       return;
     }
 
-    const storagePath = `images/${uploadedFile.name}`;
+    const storagePath = `shows/${uploadedFile.name}`;
     const storageRef = ref(storage, storagePath);
 
     try {
@@ -73,10 +72,10 @@ const ShowModal = ({ closeModal }) => {
             thumbnail: { file: uploadedFile, link: downloadURL },
           }));
           break;
-        case 'poster':
+        case 'banner':
           setShowData((prevData) => ({
             ...prevData,
-            poster: { file: uploadedFile, link: downloadURL },
+            banner: { file: uploadedFile, link: downloadURL },
           }));
           break;
         default:
@@ -156,6 +155,7 @@ const ShowModal = ({ closeModal }) => {
                     onChange={(e) => handleInputChange(e)}
                     className='mt-1 p-2 border bg-slate-800 rounded w-full'
                   >
+                    <option>Select Access</option>
                     <option value='Free'>Free</option>
                     <option value='standard'>Standard</option>
                     <option value='premium'>Premium</option>
@@ -170,6 +170,7 @@ const ShowModal = ({ closeModal }) => {
                     onChange={(e) => handleInputChange(e)}
                     className='mt-1 p-2 border bg-slate-800 rounded w-full'
                   >
+                    <option >Select Language</option>
                     <option value='Bangla'>Bangla</option>
                     <option value='Hindi'>Hindi</option>
                     <option value='English'>English</option>
@@ -186,6 +187,7 @@ const ShowModal = ({ closeModal }) => {
                   onChange={(e) => handleInputChange(e)}
                   className='mt-1 p-2 border bg-slate-800 rounded w-full'
                 >
+                  <option >Select Genere</option>
                   <option value='Action'>Action</option>
                   <option value='Adventure'>Adventure</option>
                   <option value='Romance'>Romance</option>
@@ -201,6 +203,7 @@ const ShowModal = ({ closeModal }) => {
                   onChange={(e) => handleInputChange(e)}
                   className='mt-1 p-2 border bg-slate-800 rounded w-full'
                 >
+                  <option >Select Category</option>
                   <option value='Drama'>Drama</option>
                   <option value='Animation'>Animation</option>
 
@@ -215,6 +218,9 @@ const ShowModal = ({ closeModal }) => {
                   onChange={(e) => handleInputChange(e)}
                   className='mt-1 p-2 border bg-slate-800 rounded w-full'
                 >
+                  <option >Select Country</option>
+                  <option value='Bangladesh'>Bangladesh</option>
+                  <option value='South Koria'>South Koria</option>
                   <option value='China'>China</option>
                   <option value='UK'>UK</option>
                   <option value='India'>India</option>
@@ -228,7 +234,7 @@ const ShowModal = ({ closeModal }) => {
             <fieldset className='border p-4'>
               <legend>MEDIA</legend>
               <div className='my-4'>
-              <span className='py-2 bg-slate-800 px-4'>Upload Video {videoUploadPercent} %</span>
+              <span className='py-2 bg-slate-800 px-4'>Upload File {videoUploadPercent} %</span>
               </div>
               <div className='mb-4'>
                 <label className='block text-sm font-medium text-gray-600'>Thumbnail:</label>
@@ -241,14 +247,15 @@ const ShowModal = ({ closeModal }) => {
               </div>
 
               <div className='mb-4'>
-                <label className='block text-sm font-medium text-gray-600'>Poster:</label>
+                <label className='block text-sm font-medium text-gray-600'>Banner:</label>
                 <input
                   type='file'
-                  name='poster'
+                  name='banner'
                   onChange={handleFileUpload}
                   className='mt-1 p-2 border bg-slate-800 rounded w-full'
                 />
               </div>
+             
 
             </fieldset>
           </form>

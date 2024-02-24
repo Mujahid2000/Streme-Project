@@ -8,9 +8,7 @@ const Like = ({ data, likeData, setStateLike, stateLike }) => {
     const userInfo = useUserInfo();
     const email=userInfo?.email
     const [like, setLike] = useState();
-    // console.log(like);
-    
-    
+  
     const toggleLike = async () => {
         try {
             
@@ -34,18 +32,11 @@ const Like = ({ data, likeData, setStateLike, stateLike }) => {
         }
     };
 
-    
-
-    const handleSidebarToggle = () => {
-        setIsOpen(!isOpen);
-      };
-
-
-      useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 {
-                    const response = await axios.get(`http://localhost:5000/like`);
+                    const response = await axios.get(`https://endgame-team-server.vercel.app/like`);
                     const responseData = response.data;
                     setLike(responseData);
                 }
@@ -56,6 +47,7 @@ const Like = ({ data, likeData, setStateLike, stateLike }) => {
     
         fetchData();
     }, []);
+    
 
     return (
         <div className='flex gap-2'>

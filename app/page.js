@@ -9,22 +9,26 @@ import Faq from "../section/Faq";
 import Footer from "../section/Footer";
 import Review from "../section/Review";
 import Navbar from "@/components/LandingNavbar/Navbar";
+import useUserInfo from "@/hooks/useUser";
+import Link from "next/link";
 
 
 
 
 
 export default function LandingPage() {
+
+  const userInfo = useUserInfo()
   const [currentSlider, setCurrentSlider] = useState(0);
   const sliders = [{ img: "https://i.ibb.co/ZhrDhcd/desktop-wallpaper-kgf-chapter-2-stills-first-look-posters-of-kgf-chapter-2-movie-kgf-chapter-2-poste.jpg", tags: "Room", }, { img: "https://i.ibb.co/4RTZrWc/thamb3.jpg", tags: "Room", }, { img: "https://i.ibb.co/LS8DnKg/wp11157463.jpg", tags: "Room", }, { img: "https://i.ibb.co/NSg5SDJ/thamb4.jpg", tags: "Room", }, { img: "https://i.ibb.co/Q6xrkJm/thamb5.jpg", tags: "Room", },];
   const nextSlider = () => setCurrentSlider((currentSlider) => (currentSlider === sliders.length - 1 ? 0 : currentSlider + 1));
   return (
 
-    
-    
+
+
 
     <main className="">
-    
+
 
       <div style={{
         backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(https://i.ibb.co/m8KT5fz/hero-bg.jpg)",
@@ -39,7 +43,13 @@ export default function LandingPage() {
           <div className="w-2/3 lg:w-2/4 lg:mb-16 text-center lg:text-left space-y-2 lg:space-y-5 lg:py-5 pt-16">
             <h1 className="text-lg md:text-4xl pt-4 md:pt-0 text-white lg:text-[40px] font-bold">Watch latest movies, TV shows, and more...</h1>
             <p className="text-[#616161] text-xs md:text-lg">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
-            <button className="font-bold py-2 xl:py-3 text-xs md:text-base lg:text-lg xl:text-xl hover:scale-95 duration-300 px-4 lg:px-10 text-white bg-[#00b84b]">Explore More</button>
+            <div className="my-2">
+              {userInfo && userInfo.email ? <Link href="/home"><span className="font-bold  py-2 xl:py-3 text-xs md:text-base lg:text-lg xl:text-xl hover:scale-95 duration-300 px-4 lg:px-10 text-white mt-5 bg-[#00b84b] z-[100000]">Explore More</span></Link>
+                : <Link href="/login"><span className="font-bold  py-2 xl:py-3 text-xs md:text-base lg:text-lg xl:text-xl hover:scale-95 duration-300 px-4 lg:px-10 text-white mt-5 bg-[#00b84b] z-[100000]">Explore More</span></Link>
+              }
+
+            </div>
+
           </div>
           {/* <CarouselMain /> */}
           <div className="sm:w-2/3 h-[540px] md:h-[500px] flex items-center relative overflow-hidden">
